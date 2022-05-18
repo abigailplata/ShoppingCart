@@ -406,17 +406,18 @@ function display_admin_menu() {
 <?php
 }
 
- function display_button($target, $image, $alt) {
-  echo "<div align=\"center\"><a href=\"".$target."\">
-           <img src=\"images/".$image.".gif\"
-          alt=\"".$alt."\" border=\"0\" height=\"50\"
-            width=\"135\"/></a></div>";
- }
 
-// Change button to HTML button instead of image - Jonathan Ebueng
-//function display_button($target, $text) {
-//  echo "
+// function display_button($target, $image, $alt) {
+// echo "<div align=\"center\"><a href=\"".$target."\">
+//          <img src=\"images/".$image.".gif\"
+//          alt=\"".$alt."\" border=\"0\" height=\"50\"
+//            width=\"135\"/></a></div>";
 //}
+
+// Change button to HTML link instead of image - Jonathan Ebueng
+function display_button($target, $dummy, $text) {
+  echo "<a href=\"".$target."\>$text</a>";
+}
 
 function display_form_button($image, $alt) {
   echo "<div align=\"center\"><input type=\"image\"
