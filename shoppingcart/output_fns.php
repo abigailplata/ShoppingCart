@@ -427,23 +427,23 @@ function display_form_button($image, $alt) {
 }
 
 // Added by Jonathan Ebueng 5/17/2022
-function random_book() {
+function random_sticker() {
   $conn = db_connect();
-  // Sort all books randomly and choose the first one in the list
-  $query = "select * from books order by rand() limit 1;";
+  // Sort all stickers randomly and choose the first one in the list
+  $query = "select * from stickers order by rand() limit 1;";
   $result = $conn->query($query);
   if (!$result) {
     echo "<p>Database access failed</p>";
   } else {
-    $book = $result->fetch_array();
-    $url = "show_book.php?isbn=".$book['isbn'];
+    $sticker = $result->fetch_array();
+    $url = "show_book.php?isbn=".$sticker['isbn'];
     echo "</h2>";
-    $title = $book['title'];
+    $title = $sticker['title'];
     echo "<h2>";
     do_html_url($url, $title);
     echo "</h2>";
     echo "<br>";
-    display_book_details($book);
+    display_book_details($sticker);
   }
 }
 
