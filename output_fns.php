@@ -424,12 +424,26 @@ function display_admin_menu() {
 <?php
 }
 
-function display_button($target, $image, $alt) {
+/* function display_button($target, $image, $alt) {
   echo "<div align=\"center\"><a href=\"".$target."\">
           <img src=\"images/".$image.".gif\"
            alt=\"".$alt."\" border=\"0\" height=\"50\"
            width=\"135\"/></a></div>";
+} */
+
+function display_button($target, $ignore, $text) {
+  /* echo "<a href=\"".$target."\">$text</a>"; */
+  echo "<button onclick=\"window.location.href=\"";
+  echo $target;
+  echo "\"";
+  echo ">";
+  echo $text;
+  echo "</button>";
+
+  /* <button onclick="window.location.href='/page2'">Continue</button> */
+
 }
+
 
 function display_form_button($image, $alt) {
   echo "<div align=\"center\"><input type=\"image\"
