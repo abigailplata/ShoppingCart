@@ -21,15 +21,19 @@ function do_html_header($title = '') {
       hr { color: #FF0000; width=70%; text-align=center}
       a { color: #000000 }
     </style>
+    <link rel="stylesheet" href="https://vanillacss.com/vanilla.css">
   </head>
   <body>
-  <table width="100%" border="0" cellspacing="0" bgcolor="#cccccc">
+
+  <!-- Removing table JE 5/24/2022 --> 
+  <!--<table width="100%" border="0" cellspacing="0" bgcolor="#cccccc">
   <tr>
-  <td rowspan="2">
-  <a href="index.php"><img src="images/Book-O-Rama.gif" alt="Bookorama" border="0"
-       align="left" valign="bottom" height="55" width="325"/></a>
-  </td>
-  <td align="right" valign="bottom">
+  <td rowspan="2"> -->
+  <!-- Replacing Logo JE 5/24/2022 -->
+  <!-- <a href="index.php"><img src="images/Book-O-Rama.gif" alt="Bookorama" border="0"
+       align="left" valign="bottom" height="55" width="325"/></a> -->
+  <h1>StickerXYZ</h1>
+  <!-- <td align="right" valign="bottom"> -->
   <?php
      if(isset($_SESSION['admin_user'])) {
        echo "&nbsp;";
@@ -37,8 +41,8 @@ function do_html_header($title = '') {
        echo "Total Items = ".$_SESSION['items'];
      }
   ?>
-  </td>
-  <td align="right" rowspan="2" width="135">
+  <!-- </td> -->
+  <!-- <td align="right" rowspan="2" width="135"> -->
   <?php
      if(isset($_SESSION['admin_user'])) {
        display_button('logout.php', 'log-out', 'Log Out');
@@ -46,9 +50,9 @@ function do_html_header($title = '') {
        display_button('show_cart.php', 'view-cart', 'View Your Shopping Cart');
      }
   ?>
-  </tr>
-  <tr>
-  <td align="right" valign="top">
+  <!-- </tr> -->
+  <!-- <tr> -->
+  <!-- <td align="right" valign="top"> -->
   <?php
      if(isset($_SESSION['admin_user'])) {
        echo "&nbsp;";
@@ -56,9 +60,9 @@ function do_html_header($title = '') {
        echo "Total Price = $".number_format($_SESSION['total_price'],2);
      }
   ?>
-  </td>
-  </tr>
-  </table>
+  <!-- </td> -->
+  <!-- </tr> -->
+  <!-- </table> -->
 <?php
   if($title) {
     do_html_heading($title);
@@ -432,6 +436,27 @@ function display_form_button($image, $alt) {
            src=\"images/".$image.".gif\"
            alt=\"".$alt."\" border=\"0\" height=\"50\"
            width=\"135\"/></div>";
+}
+
+// Added by Jonathan Ebueng 5/17/2022
+function random_sticker() {
+  $conn = db_connect();
+  // Sort all stickers randomly and choose the first one in the list
+  $query = "select * from stickers order by rand() limit 1;";
+  $result = $conn->query($query);
+  if (!$result) {
+    echo "<p>Database access failed</p>";
+  } else {
+    $sticker = $result->fetch_array();
+    $url = "show_book.php?isbn=".$sticker['isbn'];
+    echo "</h2>";
+    $title = $sticker['title'];
+    echo "<h2>";
+    do_html_url($url, $title);
+    echo "</h2>";
+    echo "<br>";
+    display_sticker_details($sticker);
+  }
 }
 
 ?>
