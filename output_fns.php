@@ -7,6 +7,7 @@ function do_html_header($title = '') {
   if (!$_SESSION['items']) {
     $_SESSION['items'] = '0';
   }
+  
   if (!$_SESSION['total_price']) {
     $_SESSION['total_price'] = '0.00';
   }
@@ -335,37 +336,33 @@ function display_cart($cart, $change = true, $images = 1) {
          </tr>";
 
   //display each item as a table row
-  foreach ($cart as $isbn => $qty)  {
-    $book = get_book_details($isbn);
+  foreach ($cart as $stickerID => $qty)  {
+    $sticker = get_sticker_details($stickerID);
     echo "<tr>";
     if($images == true) {
-      echo "<td align=\"left\">";
-      if (file_exists("images/".$isbn.".jpg")) {
-         $size = GetImageSize("images/".$isbn.".jpg");
-         if(($size[0] > 0) && ($size[1] > 0)) {
-           echo "<img src=\"images/".$isbn.".jpg\"
-                  style=\"border: 1px solid black\"
-                  width=\"".($size[0]/3)."\"
-                  height=\"".($size[1]/3)."\"/>";
-         }
+      echo "<td align=\"left\">";     
+      if (file_exists("images/".$stickerID.".svg")) {
+        echo "<img src=\"images/".$stickerID.".svg\"
+              height=\"55\" width=\"50\"
+              style=\"border: 1px solid black\"/>";
       } else {
          echo "&nbsp;";
       }
       echo "</td>";
     }
     echo "<td align=\"left\">
-          <a href=\"show_book.php?isbn=".$isbn."\">".$book['title']."</a>
-          by ".$book['author']."</td>
-          <td align=\"center\">\$".number_format($book['price'], 2)."</td>
+          <a href=\"show_sticker.php?isbn=".$stickerID."\">".$sticker['title']."</a>
+          by ".$sticker['color']."</td>
+          <td align=\"center\">\$".number_format($sticker['price'], 2)."</td>
           <td align=\"center\">";
 
     // if we allow changes, quantities are in text boxes
     if ($change == true) {
-      echo "<input type=\"text\" name=\"".$isbn."\" value=\"".$qty."\" size=\"3\">";
+      echo "<input type=\"text\" name=\"".$stickerID."\" value=\"".$qty."\" size=\"3\">";
     } else {
       echo $qty;
     }
-    echo "</td><td align=\"center\">\$".number_format($book['price']*$qty,2)."</td></tr>\n";
+    echo "</td><td align=\"center\">\$".number_format($sticker['price']*$qty,2)."</td></tr>\n";
   }
   // display total row
   echo "<tr>
@@ -415,7 +412,7 @@ function display_admin_menu() {
 <br />
 <a href="index.php">Go to main site</a><br />
 <a href="insert_category_form.php">Add a new category</a><br />
-<a href="insert_book_form.php">Add a new book</a><br />
+<a href="insert_sticker_form.php">Add a new sticker</a><br />
 <a href="change_password_form.php">Change admin password</a><br />
 <?php
 }

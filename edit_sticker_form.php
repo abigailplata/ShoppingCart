@@ -1,0 +1,20 @@
+<?php
+
+// include function files for this application
+require_once('sticker_sc_fns.php');
+session_start();
+
+do_html_header("Edit sticker details");
+if (check_admin_user()) {
+  if ($book = get_sticker_details($_GET['stickerID'])) {
+    display_sticker_form($sticker);
+  } else {
+    echo "<p>Could not retrieve sticker details.</p>";
+  }
+  do_html_url("admin.php", "Back to administration menu");
+} else {
+  echo "<p>You are not authorized to enter the administration area.</p>";
+}
+do_html_footer();
+
+?>

@@ -84,15 +84,18 @@ function insert_order($order_details) {
     return false;
   }
 
-  // insert each book
-  foreach($_SESSION['cart'] as $isbn => $quantity) {
-    $detail = get_book_details($isbn);
+  // insert each sticker
+  //GL 5/24
+  foreach($_SESSION['cart'] as $stickerID => $quantity) {
+    $detail = get_sticker_details($stickerID);
     $query = "delete from order_items where
-              orderid = '".$orderid."' and isbn = '".$isbn."'";
+              orderid = '".$orderid."' and stickerID = '".$stickerID."'";
     $result = $conn->query($query);
+   
     $query = "insert into order_items values
-              ('".$orderid."', '".$isbn."', ".$detail['price'].", $quantity)";
+              ('".$orderid."', '".$stickerID."', ".$detail['price'].", $quantity)";
     $result = $conn->query($query);
+    
     if(!$result) {
       return false;
     }
