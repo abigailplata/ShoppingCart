@@ -24,7 +24,6 @@ function do_html_header($title = '') {
     <link rel="stylesheet" href="https://vanillacss.com/vanilla.css">
   </head>
   <body>
-
   <!-- Removing table JE 5/24/2022 --> 
   <!--<table width="100%" border="0" cellspacing="0" bgcolor="#cccccc">
   <tr>
@@ -425,25 +424,18 @@ function display_admin_menu() {
 }
 
 /* function display_button($target, $image, $alt) {
+   admin.php
   echo "<div align=\"center\"><a href=\"".$target."\">
           <img src=\"images/".$image.".gif\"
            alt=\"".$alt."\" border=\"0\" height=\"50\"
            width=\"135\"/></a></div>";
-} */
+}  */
 
 function display_button($target, $ignore, $text) {
-  /* echo "<a href=\"".$target."\">$text</a>"; */
-  echo "<button onclick=\"window.location.href=\"";
-  echo $target;
-  echo "\"";
-  echo ">";
-  echo $text;
-  echo "</button>";
-
-  /* <button onclick="window.location.href='/page2'">Continue</button> */
-
+  echo "<button onclick=window.location.href=\"{$target}\">{$text}</button>";
+  // display_button("admin.php", "admin-menu", "Admin Menu");
+  // <button onclick=window.location.href=show_cart.php>View Your Shopping Cart</button>
 }
-
 
 function display_form_button($image, $alt) {
   echo "<div align=\"center\"><input type=\"image\"
