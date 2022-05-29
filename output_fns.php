@@ -32,7 +32,7 @@ function do_html_header($title = '') {
   <!-- Replacing Logo JE 5/24/2022 -->
   <!-- <a href="index.php"><img src="images/Book-O-Rama.gif" alt="Bookorama" border="0"
        align="left" valign="bottom" height="55" width="325"/></a> -->
-  <h1>StickerXYZ</h1>
+  <a href='index.php'><h1>StickersXYZ</h1></a>
   <!-- <td align="right" valign="bottom"> -->
   <?php
      if(isset($_SESSION['admin_user'])) {
