@@ -22,7 +22,6 @@ function do_html_header($title = '') {
       hr { color: #FF0000; width=70%; text-align=center}
       a { color: #000000 }
     </style>
-    <link rel="stylesheet" href="https://vanillacss.com/vanilla.css">
   </head>
   <body>
   <!-- Removing table JE 5/24/2022 --> 
