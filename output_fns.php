@@ -15,24 +15,21 @@ function do_html_header($title = '') {
   <html>
   <head>
     <title><?php echo $title; ?></title>
-    <style>
-      h2 { font-family: Arial, Helvetica, sans-serif; font-size: 22px; color: red; margin: 6px }
-      body { font-family: Arial, Helvetica, sans-serif; font-size: 13px }
-      li, td { font-family: Arial, Helvetica, sans-serif; font-size: 13px }
-      hr { color: #FF0000; width=70%; text-align=center}
-      a { color: #000000 }
-    </style>
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-  <!-- Removing table JE 5/24/2022 --> 
-  <!--<table width="100%" border="0" cellspacing="0" bgcolor="#cccccc">
-  <tr>
-  <td rowspan="2"> -->
-  <!-- Replacing Logo JE 5/24/2022 -->
-  <!-- <a href="index.php"><img src="images/Book-O-Rama.gif" alt="Bookorama" border="0"
-       align="left" valign="bottom" height="55" width="325"/></a> -->
+
+  <ul class='nav'>
+  <li><a href="index.php">Home</a></li>
+  <li><a href="#news">Stickers</a></li>
+  <li><a href="#contact">Contact</a></li>
+  <li><a href="#about">About</a></li>
+  </ul>
+
+
+
   <a href='index.php'><h1>StickersXYZ</h1></a>
-  <!-- <td align="right" valign="bottom"> -->
+
   <?php
      if(isset($_SESSION['admin_user'])) {
        echo "&nbsp;";
@@ -40,8 +37,6 @@ function do_html_header($title = '') {
        echo "Total Items = ".$_SESSION['items'];
      }
   ?>
-  <!-- </td> -->
-  <!-- <td align="right" rowspan="2" width="135"> -->
   <?php
      if(isset($_SESSION['admin_user'])) {
        display_button('logout.php', 'log-out', 'Log Out');
@@ -49,9 +44,6 @@ function do_html_header($title = '') {
        display_button('show_cart.php', 'view-cart', 'View Your Shopping Cart');
      }
   ?>
-  <!-- </tr> -->
-  <!-- <tr> -->
-  <!-- <td align="right" valign="top"> -->
   <?php
      if(isset($_SESSION['admin_user'])) {
        echo "&nbsp;";
@@ -59,9 +51,7 @@ function do_html_header($title = '') {
        echo "Total Price = $".number_format($_SESSION['total_price'],2);
      }
   ?>
-  <!-- </td> -->
-  <!-- </tr> -->
-  <!-- </table> -->
+
 <?php
   if($title) {
     do_html_heading($title);
