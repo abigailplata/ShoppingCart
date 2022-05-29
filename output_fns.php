@@ -18,10 +18,16 @@ function do_html_header($title = '') {
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-
-  <ul class='nav'>
+  <ul class="nav">
   <li><a href="index.php">Home</a></li>
-  <li><a href="#news">Stickers</a></li>
+  <li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">Stickers</a>
+    <div class="dropdown-content">
+      <a href="#">Animals</a>
+      <a href="#">Cars</a>
+      <a href="#">Flowers</a>
+    </div>
+  </li>
   <li><a href="#contact">Contact</a></li>
   <li><a href="#about">About</a></li>
   </ul>
