@@ -50,7 +50,7 @@ function display_category_form($category = '') {
 <?php
 }
 
-function display_book_form($book = '') {
+function display_sticker_form($sticker = '') {
 // This displays the book form.
 // It is very similar to the category form.
 // This form can be used for inserting or editing books.
@@ -62,28 +62,28 @@ function display_book_form($book = '') {
 
 
   // if passed an existing book, proceed in "edit mode"
-  $edit = is_array($book);
+  $edit = is_array($sticker);
 
   // most of the form is in plain HTML with some
   // optional PHP bits throughout
 ?>
   <form method="post"
-        action="<?php echo $edit ? 'edit_book.php' : 'insert_book.php';?>">
+        action="<?php echo $edit ? 'edit_sticker.php' : 'insert_sticker.php';?>">
   <table border="0">
   <tr>
-    <td>ISBN:</td>
+    <td>StickerID:</td>
     <td><input type="text" name="isbn"
-         value="<?php echo $edit ? $book['isbn'] : ''; ?>" /></td>
+         value="<?php echo $edit ? $sticker['stickerID'] : ''; ?>" /></td>
   </tr>
   <tr>
-    <td>Book Title:</td>
+    <td>Sticker Title:</td>
     <td><input type="text" name="title"
-         value="<?php echo $edit ? $book['title'] : ''; ?>" /></td>
+         value="<?php echo $edit ? $sticker['title'] : ''; ?>" /></td>
   </tr>
   <tr>
-    <td>Book Author:</td>
-    <td><input type="text" name="author"
-         value="<?php echo $edit ? $book['author'] : ''; ?>" /></td>
+    <td>Sticker Color:</td>
+    <td><input type="text" name="color"
+         value="<?php echo $edit ? $sticker['color'] : ''; ?>" /></td>
    </tr>
    <tr>
       <td>Category:</td>
@@ -94,7 +94,7 @@ function display_book_form($book = '') {
           foreach ($cat_array as $thiscat) {
                echo "<option value=\"".$thiscat['catid']."\"";
                // if existing book, put in current catgory
-               if (($edit) && ($thiscat['catid'] == $book['catid'])) {
+               if (($edit) && ($thiscat['catid'] == $sticker['catid'])) {
                    echo " selected";
                }
                echo ">".$thiscat['catname']."</option>";
@@ -106,12 +106,12 @@ function display_book_form($book = '') {
    <tr>
     <td>Price:</td>
     <td><input type="text" name="price"
-               value="<?php echo $edit ? $book['price'] : ''; ?>" /></td>
+               value="<?php echo $edit ? $sticker['price'] : ''; ?>" /></td>
    </tr>
    <tr>
      <td>Description:</td>
      <td><textarea rows="3" cols="50"
-          name="description"><?php echo $edit ? $book['description'] : ''; ?></textarea></td>
+          name="description"><?php echo $edit ? $sticker['description'] : ''; ?></textarea></td>
     </tr>
     <tr>
       <td <?php if (!$edit) { echo "colspan=2"; }?> align="center">
@@ -120,7 +120,7 @@ function display_book_form($book = '') {
              // we need the old isbn to find book in database
              // if the isbn is being updated
              echo "<input type=\"hidden\" name=\"oldisbn\"
-                    value=\"".$book['isbn']."\" />";
+                    value=\"".$sticker['stickerID']."\" />";
          ?>
         <input type="submit"
                value="<?php echo $edit ? 'Update' : 'Add'; ?> Book" />
@@ -128,10 +128,10 @@ function display_book_form($book = '') {
         <?php
            if ($edit) {
              echo "<td>
-                   <form method=\"post\" action=\"delete_book.php\">
-                   <input type=\"hidden\" name=\"isbn\"
-                    value=\"".$book['isbn']."\" />
-                   <input type=\"submit\" value=\"Delete book\"/>
+                   <form method=\"post\" action=\"delete_sticker.php\">
+                   <input type=\"hidden\" name=\"stickerID\"
+                    value=\"".$sticker['stickerID']."\" />
+                   <input type=\"submit\" value=\"Delete sticker\"/>
                    </form></td>";
             }
           ?>
@@ -189,24 +189,24 @@ function insert_category($catname) {
    }
 }
 
-function insert_book($isbn, $title, $author, $catid, $price, $description) {
-// insert a new book into the database
+function insert_sticker($stickerID, $title, $color, $catid, $price, $description) {
+// insert a new sticker into the database
 
    $conn = db_connect();
 
-   // check book does not already exist
+   // check sticker does not already exist
    $query = "select *
-             from books
-             where isbn='".$isbn."'";
+             from stickers
+             where stickerID='".$stickerID."'";
 
    $result = $conn->query($query);
    if ((!$result) || ($result->num_rows!=0)) {
      return false;
    }
 
-   // insert new book
-   $query = "insert into books values
-            ('".$isbn."', '".$author."', '".$title."',
+   // insert new sticker
+   $query = "insert into sticker values
+            ('".$stickerID."', '".$color."', '".$title."',
              '".$catid."', '".$price."', '".$description."')";
 
    $result = $conn->query($query);
@@ -233,21 +233,21 @@ function update_category($catid, $catname) {
    }
 }
 
-function update_book($oldisbn, $isbn, $title, $author, $catid,
+function update_sticker($oldstickerID, $stickerID, $title, $color, $catid,
                      $price, $description) {
-// change details of book stored under $oldisbn in
+// change details of sticker stored under $oldstickerID in
 // the database to new details in arguments
 
    $conn = db_connect();
 
-   $query = "update books
-             set isbn= '".$isbn."',
+   $query = "update stickers
+             set stickerID= '".$stickerID."',
              title = '".$title."',
-             author = '".$author."',
+             color = '".$color."',
              catid = '".$catid."',
              price = '".$price."',
              description = '".$description."'
-             where isbn = '".$oldisbn."'";
+             where stickerID = '".$oldstickerID."'";
 
    $result = @$conn->query($query);
    if (!$result) {
@@ -267,7 +267,7 @@ function delete_category($catid) {
    // check if there are any books in category
    // to avoid deletion anomalies
    $query = "select *
-             from books
+             from stickers
              where catid='".$catid."'";
 
    $result = @$conn->query($query);
@@ -286,13 +286,13 @@ function delete_category($catid) {
 }
 
 
-function delete_book($isbn) {
-// Deletes the book identified by $isbn from the database.
+function delete_sticker($stickerID) {
+// Deletes the book identified by $stickerID from the database.
 
    $conn = db_connect();
 
-   $query = "delete from books
-             where isbn='".$isbn."'";
+   $query = "delete from stickers
+             where stickerID='".$stickerID."'";
    $result = @$conn->query($query);
    if (!$result) {
      return false;
