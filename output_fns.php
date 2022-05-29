@@ -451,7 +451,7 @@ function random_sticker() {
     echo "<p>Database access failed</p>";
   } else {
     $sticker = $result->fetch_array();
-    $url = "show_book.php?isbn=".$sticker['stickerID'];
+    $url = "show_sticker.php?stickerID=".$sticker['stickerID'];
     echo "</h2>";
     $title = $sticker['title'];
     echo "<h2>";
