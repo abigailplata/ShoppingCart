@@ -354,7 +354,7 @@ function display_cart($cart, $change = true, $images = 1) {
       echo "</td>";
     }
     echo "<td align=\"left\">
-          <a href=\"show_sticker.php?isbn=".$stickerID."\">".$sticker['title']."</a>
+          <a href=\"show_sticker.php?stickerID=".$stickerID."\">".$sticker['title']."</a>
           by ".$sticker['color']."</td>
           <td align=\"center\">\$".number_format($sticker['price'], 2)."</td>
           <td align=\"center\">";

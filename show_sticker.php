@@ -18,7 +18,7 @@
 
   // if logged in as admin, show edit book links
   if(check_admin_user()) {
-    display_button("edit_book_form.php?isbn=".$stickerID, "edit-item", "Edit Item");
+    display_button("edit_book_form.php?stickerID=".$stickerID, "edit-item", "Edit Item");
     display_button("admin.php", "admin-menu", "Admin Menu");
     display_button($target, "continue", "Continue");
   } else {

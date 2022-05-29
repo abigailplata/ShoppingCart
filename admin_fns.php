@@ -72,7 +72,7 @@ function display_sticker_form($sticker = '') {
   <table border="0">
   <tr>
     <td>StickerID:</td>
-    <td><input type="text" name="isbn"
+    <td><input type="text" name="stickerID"
          value="<?php echo $edit ? $sticker['stickerID'] : ''; ?>" /></td>
   </tr>
   <tr>
@@ -117,9 +117,9 @@ function display_sticker_form($sticker = '') {
       <td <?php if (!$edit) { echo "colspan=2"; }?> align="center">
          <?php
             if ($edit)
-             // we need the old isbn to find book in database
-             // if the isbn is being updated
-             echo "<input type=\"hidden\" name=\"oldisbn\"
+             // we need the old stickerID to find book in database
+             // if the stickerID is being updated
+             echo "<input type=\"hidden\" name=\"oldstickerID\"
                     value=\"".$sticker['stickerID']."\" />";
          ?>
         <input type="submit"

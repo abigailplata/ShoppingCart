@@ -32,7 +32,7 @@ create table orders
 
 create table stickers /*books*/
 (
-   stickerID char(13) not null primary key,/*isbn char(13) not null primary key,*/
+   stickerID char(13) not null primary key,/*stickerID char(13) not null primary key,*/
    color char(80), /*author char(80),*/
    title char(100),
    catid int unsigned,
@@ -49,10 +49,10 @@ create table categories
 create table order_items
 (
   orderid int unsigned not null,
-  stickerID char(13) not null, /*isbn char(13) not null,*/
+  stickerID char(13) not null, /*stickerID char(13) not null,*/
   item_price float(4,2) not null,
   quantity tinyint unsigned not null,
-  primary key (orderid, stickerID) /*--(orderid,isbn)*/
+  primary key (orderid, stickerID) /*--(orderid,stickerID)*/
 );
 
 create table admin
