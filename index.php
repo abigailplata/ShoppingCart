@@ -2,7 +2,12 @@
   include ('sticker_sc_fns.php');
   // The shopping cart needs sessions, so start one
   session_start();
+  
   do_html_header("Welcome to StickersXYZ");
+
+  // display a random book - Jonathan Ebueng
+  echo "<h1>Check out this sticker!</h1>";
+  random_sticker();
 
   echo "<p>Please choose a category:</p>";
 

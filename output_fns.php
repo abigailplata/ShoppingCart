@@ -7,6 +7,7 @@ function do_html_header($title = '') {
   if (!$_SESSION['items']) {
     $_SESSION['items'] = '0';
   }
+  
   if (!$_SESSION['total_price']) {
     $_SESSION['total_price'] = '0.00';
   }
@@ -14,51 +15,46 @@ function do_html_header($title = '') {
   <html>
   <head>
     <title><?php echo $title; ?></title>
-    <style>
-      h2 { font-family: Arial, Helvetica, sans-serif; font-size: 22px; color: red; margin: 6px }
-      body { font-family: Arial, Helvetica, sans-serif; font-size: 13px }
-      li, td { font-family: Arial, Helvetica, sans-serif; font-size: 13px }
-      hr { color: #FF0000; width=70%; text-align=center}
-      a { color: #000000 }
-    </style>
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-  <table width="100%" border="0" cellspacing="0" bgcolor="#cccccc">
-  <tr>
-  <td rowspan="2">
-  <a href="index.php"><img src="images/Book-O-Rama.gif" alt="Bookorama" border="0"
-       align="left" valign="bottom" height="55" width="325"/></a>
-  </td>
-  <td align="right" valign="bottom">
-  <?php
-     if(isset($_SESSION['admin_user'])) {
-       echo "&nbsp;";
-     } else {
-       echo "Total Items = ".$_SESSION['items'];
-     }
-  ?>
-  </td>
-  <td align="right" rowspan="2" width="135">
-  <?php
-     if(isset($_SESSION['admin_user'])) {
-       display_button('logout.php', 'log-out', 'Log Out');
-     } else {
-       display_button('show_cart.php', 'view-cart', 'View Your Shopping Cart');
-     }
-  ?>
-  </tr>
-  <tr>
-  <td align="right" valign="top">
-  <?php
-     if(isset($_SESSION['admin_user'])) {
-       echo "&nbsp;";
-     } else {
-       echo "Total Price = $".number_format($_SESSION['total_price'],2);
-     }
-  ?>
-  </td>
-  </tr>
-  </table>
+  <ul class="nav">
+    <li><a href="index.php"><strong>StickersXYZ</strong></a></li>
+    <li class="dropdown">
+      <a href="javascript:void(0)" class="dropbtn">Stickers</a>
+      <div class="dropdown-content">
+        <a href="show_cat.php?catid=1">Animals</a>
+        <a href="show_cat.php?catid=2">Cars</a>
+        <a href="show_cat.php?catid=3">Flowers</a>
+      </div>
+    </li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#about">About</a></li>
+    <li><p>Test</p></li>
+    <li>
+          <?php
+          if(isset($_SESSION['admin_user'])) {
+            echo "&nbsp;";
+          } else {
+            echo "<p>Total Price: $".number_format($_SESSION['total_price'],2)."</p>";
+          }
+          ?>
+    </li>
+    <li>
+      <div class="cart_info"><?php
+      if(isset($_SESSION['admin_user'])) {
+        display_button('logout.php', 'log-out', 'Log Out');
+      } else {
+        /*
+        display_button('show_cart.php', 'view-cart', 'View Your Shopping Cart');
+        */
+        echo "<a href=\"show_cart.php\"><strong>View Shopping Cart </strong>(".$_SESSION['items']." items)</a>";
+      }
+      ?>
+      </div>
+    </li>
+  </ul>
+ 
 <?php
   if($title) {
     do_html_heading($title);
@@ -335,37 +331,33 @@ function display_cart($cart, $change = true, $images = 1) {
          </tr>";
 
   //display each item as a table row
-  foreach ($cart as $isbn => $qty)  {
-    $book = get_book_details($isbn);
+  foreach ($cart as $stickerID => $qty)  {
+    $sticker = get_sticker_details($stickerID);
     echo "<tr>";
     if($images == true) {
-      echo "<td align=\"left\">";
-      if (file_exists("images/".$isbn.".jpg")) {
-         $size = GetImageSize("images/".$isbn.".jpg");
-         if(($size[0] > 0) && ($size[1] > 0)) {
-           echo "<img src=\"images/".$isbn.".jpg\"
-                  style=\"border: 1px solid black\"
-                  width=\"".($size[0]/3)."\"
-                  height=\"".($size[1]/3)."\"/>";
-         }
+      echo "<td align=\"left\">";     
+      if (file_exists("images/".$stickerID.".svg")) {
+        echo "<img src=\"images/".$stickerID.".svg\"
+              height=\"55\" width=\"50\"
+              style=\"border: 1px solid black\"/>";
       } else {
          echo "&nbsp;";
       }
       echo "</td>";
     }
     echo "<td align=\"left\">
-          <a href=\"show_book.php?isbn=".$isbn."\">".$book['title']."</a>
-          by ".$book['author']."</td>
-          <td align=\"center\">\$".number_format($book['price'], 2)."</td>
+          <a href=\"show_sticker.php?stickerID=".$stickerID."\">".$sticker['title']."</a>
+          by ".$sticker['color']."</td>
+          <td align=\"center\">\$".number_format($sticker['price'], 2)."</td>
           <td align=\"center\">";
 
     // if we allow changes, quantities are in text boxes
     if ($change == true) {
-      echo "<input type=\"text\" name=\"".$isbn."\" value=\"".$qty."\" size=\"3\">";
+      echo "<input type=\"text\" name=\"".$stickerID."\" value=\"".$qty."\" size=\"3\">";
     } else {
       echo $qty;
     }
-    echo "</td><td align=\"center\">\$".number_format($book['price']*$qty,2)."</td></tr>\n";
+    echo "</td><td align=\"center\">\$".number_format($sticker['price']*$qty,2)."</td></tr>\n";
   }
   // display total row
   echo "<tr>
@@ -415,16 +407,23 @@ function display_admin_menu() {
 <br />
 <a href="index.php">Go to main site</a><br />
 <a href="insert_category_form.php">Add a new category</a><br />
-<a href="insert_book_form.php">Add a new book</a><br />
+<a href="insert_sticker_form.php">Add a new sticker</a><br />
 <a href="change_password_form.php">Change admin password</a><br />
 <?php
 }
 
-function display_button($target, $image, $alt) {
+/* function display_button($target, $image, $alt) {
+   admin.php
   echo "<div align=\"center\"><a href=\"".$target."\">
           <img src=\"images/".$image.".gif\"
            alt=\"".$alt."\" border=\"0\" height=\"50\"
            width=\"135\"/></a></div>";
+}  */
+
+function display_button($target, $ignore, $text) {
+  echo "<button onclick=window.location.href=\"{$target}\">{$text}</button>";
+  // display_button("admin.php", "admin-menu", "Admin Menu");
+  // <button onclick=window.location.href=show_cart.php>View Your Shopping Cart</button>
 }
 
 function display_form_button($image, $alt) {
@@ -432,6 +431,27 @@ function display_form_button($image, $alt) {
            src=\"images/".$image.".gif\"
            alt=\"".$alt."\" border=\"0\" height=\"50\"
            width=\"135\"/></div>";
+}
+
+// Added by Jonathan Ebueng 5/17/2022
+function random_sticker() {
+  $conn = db_connect();
+  // Sort all stickers randomly and choose the first one in the list
+  $query = "select * from stickers order by rand() limit 1;";
+  $result = $conn->query($query);
+  if (!$result) {
+    echo "<p>Database access failed</p>";
+  } else {
+    $sticker = $result->fetch_array();
+    $url = "show_sticker.php?stickerID=".$sticker['stickerID'];
+    echo "</h2>";
+    $title = $sticker['title'];
+    echo "<h2>";
+    do_html_url($url, $title);
+    echo "</h2>";
+    echo "<br>";
+    display_sticker_details($sticker);
+  }
 }
 
 ?>
