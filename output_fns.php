@@ -36,16 +36,9 @@ function do_html_header($title = '') {
           ?>
     </li>
     <li>
-      <div class="cart_info"><?php
-      if(isset($_SESSION['admin_user'])) {
-        display_button('logout.php', 'log-out', 'Log Out');
-      } else {
-        /*
-        display_button('show_cart.php', 'view-cart', 'View Your Shopping Cart');
-        */
+        <?php
         echo "<a href=\"show_cart.php\"><strong>View Shopping Cart </strong>(".$_SESSION['items']." items)</a>";
-      }
-      ?>
+        ?>
       </div>
     </li>
   </ul>
