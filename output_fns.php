@@ -23,9 +23,9 @@ function do_html_header($title = '') {
   <li class="dropdown">
     <a href="javascript:void(0)" class="dropbtn">Stickers</a>
     <div class="dropdown-content">
-      <a href="#">Animals</a>
-      <a href="#">Cars</a>
-      <a href="#">Flowers</a>
+      <a href="show_cat.php?catid=1">Animals</a>
+      <a href="show_cat.php?catid=2">Cars</a>
+      <a href="show_cat.php?catid=3">Flowers</a>
     </div>
   </li>
   <li><a href="#contact">Contact</a></li>
