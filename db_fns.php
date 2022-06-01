@@ -1,5 +1,4 @@
 <?php
-\
 
 function db_connect() {
    include('db_vars.php'); 
