@@ -32,11 +32,7 @@ function do_html_header($title = '') {
     <li><a href="#about">About</a></li>
     <li>
           <?php
-          if(isset($_SESSION['admin_user'])) {
-            echo "&nbsp;";
-          } else {
-            echo "<p>Total Price: $".number_format($_SESSION['total_price'],2)."</p>";
-          }
+            echo "<div>Total Price: $".number_format($_SESSION['total_price'],2)."</div>";
           ?>
     </li>
     <li>
