@@ -18,7 +18,7 @@ ul.nav > li {
 }
 
 ul.nav a,
-ul.nav p,
+div,
 .dropbtn
 {
   display: block;

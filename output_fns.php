@@ -30,7 +30,6 @@ function do_html_header($title = '') {
     </li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#about">About</a></li>
-    <li><p>Test</p></li>
     <li>
           <?php
           if(isset($_SESSION['admin_user'])) {
