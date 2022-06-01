@@ -1,9 +1,11 @@
 <?php
-//Gaby fixed 5_23
+\
 
 function db_connect() {
-                                    //username, password, database
-   $result = new mysqli('localhost', 'sticker_sc', 'password', 'sticker_sc');
+   include('db_vars.php'); 
+   //username, password, database
+   //$result = new mysqli('localhost', 'sticker_sc', 'password', 'sticker_sc');
+   $result = new mysqli($db_server, $db_user_name, $db_password, $db_name);
    if (!$result) {
       return false;
    }
