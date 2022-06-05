@@ -38,7 +38,6 @@ function get_category_name($catid) {
    return $row->catname;
 }
 
-//Changed from get_books 5-23
 function get_stickers($catid) {
    // query database for the stickers in a category
    if ((!$catid) || ($catid == '')) {
@@ -58,8 +57,6 @@ function get_stickers($catid) {
    $result = db_result_to_array($result);
    return $result;
 }
-
-//Change get_book_details GL 5_23
 
 function get_sticker_details($stickerID) {
   // query database for all details for a particular sticker
