@@ -15,7 +15,7 @@ INSERT INTO stickers VALUES ('0672329157','red','Classic Red Car',2,2.29, 'Class
 --Insert flower stickers into stickers table
 INSERT INTO stickers VALUES ('0672329158','yellow', 'Sunflower',3, 2.29, 'Large sunflower');
 INSERT INTO stickers VALUES ('0672329159','pink','Rose',3,1.29, 'Single Rose');
-INSERT INTO stickers VALUES ('0672329160','red','Poopy',3,3.29, 'Large red poppy');
+INSERT INTO stickers VALUES ('0672329160','red','Poppy',3,3.29, 'Large red poppy');
 
 --Insert values in category table
 INSERT INTO categories VALUES (1,'Animals');
